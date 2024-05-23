@@ -20,12 +20,27 @@
             <h5><b>Favoris</b></h5>
           </div>
           <div>
-            <ul>
+            <ul class="custom-list ctl">
               <li>Mes tâches aujourd'hui</li>
-              <li>Important</li>
+              <li>Important <span class="badge bg-danger">1</span></li>
               <li>Personnel</li>
               <li>Toutes les tâches</li>
               <li>Términés</li>
+            </ul>
+          </div>
+          <br />
+          <div class="blue-pr d-flex align-items-center">
+            <h5><b>Tags</b></h5>
+            <button class="btn btn-info">
+              <i class="bi bi-plus"></i>
+            </button>
+          </div>
+          <div>
+            <ul class="custom-list ctl">
+              <li v-for="(tag, index) in tags" :key="index">
+                <input type="radio" :checked="index % 2 === 0" />
+                {{ tag["name"] }}
+              </li>
             </ul>
           </div>
         </div>
@@ -65,11 +80,8 @@
                     }}</span>
                   </div>
                   <div class="col-md-1 text-center card-title">
-                    <i
-                      v-if="company['important']"
-                      class="bi bi-diamond-fill"
-                    ></i>
-                    <i v-if="!company['important']" class="bi bi-diamond"></i>
+                    <i v-if="company['important']" class="bi bi-star-fill"></i>
+                    <i v-if="!company['important']" class="bi bi-star"></i>
                   </div>
                 </div>
               </div>
@@ -193,6 +205,7 @@ import { ref, onMounted, computed } from "vue";
 import router from "@/router";
 
 const companies = ref<any[]>([]);
+const tags = ref<any[]>([]);
 const searchTerm = ref("");
 const currentPage = ref(1);
 const itemsPerPage = 8;
@@ -203,7 +216,8 @@ onMounted(async () => {
       "https://retoolapi.dev/9lwmoL/to-do-edisys"
     );
     companies.value = response.data;
-    console.log(companies.value, "response.data");
+    const tagsList = await axios.get("https://retoolapi.dev/kEbZ3j/tags");
+    tags.value = tagsList.data;
   } catch (error) {
     console.error("Une erreur s'est produite:", error);
   }
@@ -296,5 +310,9 @@ function navigateInsert() {
 
 .back-gray-custom {
   background-color: #d7dae4;
+}
+
+.blue-pr button {
+  margin-left: 70%;
 }
 </style>
