@@ -261,7 +261,6 @@
 <script setup lang="ts">
 import axios from "axios";
 import { ref, onMounted, computed } from "vue";
-import router from "@/router";
 
 const companies = ref<any[]>([]);
 const tags = ref<any[]>([]);
@@ -327,14 +326,6 @@ function nextPage() {
 
 function setPage(pageNumber: number) {
   currentPage.value = pageNumber;
-}
-
-function handleSubmit(id: any) {
-  router.push(`/details/${id}`);
-}
-
-function navigateInsert() {
-  router.push("/insert");
 }
 </script>
 
