@@ -20,12 +20,27 @@
             <h5><b>Favoris</b></h5>
           </div>
           <div>
-            <ul>
+            <ul class="custom-list ctl">
               <li>Mes tâches aujourd'hui</li>
-              <li>Important</li>
+              <li>Important <span class="badge bg-danger">1</span></li>
               <li>Personnel</li>
               <li>Toutes les tâches</li>
               <li>Términés</li>
+            </ul>
+          </div>
+          <br />
+          <div class="blue-pr d-flex align-items-center">
+            <h5><b>Tags</b></h5>
+            <button class="btn btn-info">
+              <i class="bi bi-plus"></i>
+            </button>
+          </div>
+          <div>
+            <ul class="custom-list ctl">
+              <li v-for="(tag, index) in tags" :key="index">
+                <input type="radio" :checked="index % 2 === 0" />
+                {{ tag["name"] }}
+              </li>
             </ul>
           </div>
         </div>
@@ -54,7 +69,7 @@
               <div class="card-body">
                 <div class="row">
                   <div class="col-md-1 text-center card-title">
-                    <input type="checkbox" />
+                    <input type="checkbox" :checked="company['end-task']" />
                   </div>
                   <div class="col-md-10">
                     <h5 class="card-title">{{ company["task"] }}</h5>
@@ -67,11 +82,8 @@
                     }}</span>
                   </div>
                   <div class="col-md-1 text-center card-title">
-                    <i
-                      v-if="company['important']"
-                      class="bi bi-diamond-fill"
-                    ></i>
-                    <i v-if="!company['important']" class="bi bi-diamond"></i>
+                    <i v-if="company['important']" class="bi bi-star-fill"></i>
+                    <i v-if="!company['important']" class="bi bi-star"></i>
                   </div>
                 </div>
               </div>
@@ -113,74 +125,38 @@
         <section class="section dashboard">
           <div class="card">
             <div class="card-body pb-0">
-              <h5 class="card-title">
-                <a
-                  class="nav-link nav-profile d-flex align-items-center pe-0"
-                  data-bs-toggle="dropdown"
-                >
+              <br />
+              <div class="news">
+                <div class="post-item clearfix text-center">
                   <img
                     src="../assets/img/profile-img.jpg"
-                    alt="Profile"
+                    alt=""
                     class="rounded-circle"
                   />
-                  <p class="profile-name d-none d-md-block ps-2">John Die</p>
-                  <p class="profile-email">johndie@gmail.com</p>
-                </a>
-              </h5>
-
-              <div class="news">
-                <div class="post-item clearfix">
-                  <img src="/src/assets/img/news-1.jpg" alt="" />
-                  <h4><a href="#">Nihil blanditiis at in nihil autem</a></h4>
-                  <p>
-                    Sit recusandae non aspernatur laboriosam. Quia enim eligendi
-                    sed ut harum...
-                  </p>
+                  <h4><a href="#">John Die</a></h4>
+                  <p>johndie@gmail.com</p>
                 </div>
-
-                <div class="post-item clearfix">
-                  <img src="/src/assets/img/news-2.jpg" alt="" />
-                  <h4><a href="#">Quidem autem et impedit</a></h4>
-                  <p>
-                    Illo nemo neque maiores vitae officiis cum eum turos elan
-                    dries werona nande...
-                  </p>
+                <br />
+                <div class="blue-pr">
+                  <h5><b>Tâches terminées</b></h5>
                 </div>
-
-                <div class="post-item clearfix">
-                  <img src="/src/assets/img/news-3.jpg" alt="" />
-                  <h4>
-                    <a href="#"
-                      >Id quia et et ut maxime similique occaecati ut</a
-                    >
-                  </h4>
-                  <p>
-                    Fugiat voluptas vero eaque accusantium eos. Consequuntur sed
-                    ipsam et totam...
-                  </p>
-                </div>
-
-                <div class="post-item clearfix">
-                  <img src="/src/assets/img/news-4.jpg" alt="" />
-                  <h4><a href="#">Laborum corporis quo dara net para</a></h4>
-                  <p>
-                    Qui enim quia optio. Eligendi aut asperiores enim
-                    repellendusvel rerum cuder...
-                  </p>
-                </div>
-
-                <div class="post-item clearfix">
-                  <img src="/src/assets/img/news-5.jpg" alt="" />
-                  <h4>
-                    <a href="#">Et dolores corrupti quae illo quod dolor</a>
-                  </h4>
-                  <p>
-                    Odit ut eveniet modi reiciendis. Atque cupiditate libero
-                    beatae dignissimos eius...
-                  </p>
+                <div>
+                  <ul class="custom-list ctl">
+                    <li v-for="list in companies">
+                      <span
+                        v-if="list['end-task'] === true"
+                        class="text-muted small pt-1 fw-bold"
+                        ><b> Devs - </b></span
+                      >
+                      <span
+                        v-if="list['end-task'] === true"
+                        class="text-info small pt-2 ps-1"
+                        >{{ list["task"] }}</span
+                      >
+                    </li>
+                  </ul>
                 </div>
               </div>
-              <!-- End sidebar recent posts-->
             </div>
           </div>
         </section>
@@ -288,6 +264,7 @@ import { ref, onMounted, computed } from "vue";
 import router from "@/router";
 
 const companies = ref<any[]>([]);
+const tags = ref<any[]>([]);
 const searchTerm = ref("");
 const currentPage = ref(1);
 const itemsPerPage = 8;
@@ -299,7 +276,8 @@ onMounted(async () => {
       "https://retoolapi.dev/9lwmoL/to-do-edisys"
     );
     companies.value = response.data;
-    console.log(companies.value, "response.data");
+    const tagsList = await axios.get("https://retoolapi.dev/kEbZ3j/tags");
+    tags.value = tagsList.data;
   } catch (error) {
     console.error("Une erreur s'est produite:", error);
   }
@@ -394,5 +372,9 @@ function navigateInsert() {
 
 .back-gray-custom {
   background-color: #d7dae4;
+}
+
+.blue-pr button {
+  margin-left: 70%;
 }
 </style>
