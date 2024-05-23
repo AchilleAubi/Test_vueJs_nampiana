@@ -1,41 +1,38 @@
 <template>
   <section class="section">
     <div class="row align-items-top">
-      <div class="col-lg-2">
-        <div class="card mb-3 h-100 back-gray p-5">
-          <div class="d-flex py-4 mb-5">
-            <a href="index.html" class="logo d-flex align-items-center w-auto">
-              <img src="/src/assets/img/logo.png" alt="" />
-            </a>
+      <div class="col-lg-3">
+        <div class="card mb-3 h-100 back-gray-custom p-5">
+          <div class="card-tittle">
+            <h2><b>To do vue Js</b></h2>
           </div>
-          <h6>Lorem ipsum dolor sit amet,</h6>
-          <div class="col-12 mt-4">
-            <div class="line-with-text">
-              <div class="line"></div>
-            </div>
+          <br />
+          <div class="mb-3">
+            <input
+              type="text"
+              v-model="searchTerm"
+              placeholder="Rechercher"
+              class="form-control"
+            />
           </div>
-
-          <div class="d-grid gap-2 mt-3">
-            <button
-              class="btn btn-primary"
-              @click="navigateInsert()"
-              type="button"
-            >
-              + Add Items
-            </button>
+          <br />
+          <div class="blue-pr">
+            <h5><b>Favoris</b></h5>
           </div>
-
-          <div class="float-left mt-5">
-            <div class="credits text-white">
-              <p class="text-white">Compte: Achi@gmail.com et le mtps: test.</p>
-              John Doe
-            </div>
+          <div>
+            <ul>
+              <li>Mes tâches aujourd'hui</li>
+              <li>Important</li>
+              <li>Personnel</li>
+              <li>Toutes les tâches</li>
+              <li>Términés</li>
+            </ul>
           </div>
         </div>
       </div>
 
-      <div class="col-lg-7">
-        <div class="container">
+      <div class="col-lg-6 card">
+        <div class="container" style="margin-top: 2%">
           <div class="row">
             <div class="col-md-10">
               <ul class="custom-list">
@@ -47,27 +44,19 @@
               <button class="btn br-pr">+ Creer</button>
             </div>
           </div>
-          <div class="mb-3">
-            <input
-              type="text"
-              v-model="searchTerm"
-              placeholder="Rechercher"
-              class="form-control"
-            />
-          </div>
-          <div class="card">
+          <div style="margin-top: 5%">
             <div
               v-for="company in filteredAndPaginatedCompanies.data"
               :key="company['task']"
             >
               <div class="card-body">
                 <div class="row">
-                  <div class="col-md-1 text-center">
+                  <div class="col-md-1 text-center card-title">
                     <input type="checkbox" />
                   </div>
                   <div class="col-md-10">
                     <h5 class="card-title">{{ company["task"] }}</h5>
-                    <span><input type="radio" /></span>
+                    <span><input type="radio" checked /></span>
                     <span class="text-muted small pt-1 fw-bold"
                       ><b> Devs - </b></span
                     >
@@ -75,7 +64,7 @@
                       company["date"]
                     }}</span>
                   </div>
-                  <div class="col-md-1 text-center">
+                  <div class="col-md-1 text-center card-title">
                     <i
                       v-if="company['important']"
                       class="bi bi-diamond-fill"
@@ -303,5 +292,9 @@ function navigateInsert() {
 .custom-list {
   list-style-type: none;
   padding-left: 0;
+}
+
+.back-gray-custom {
+  background-color: #d7dae4;
 }
 </style>
