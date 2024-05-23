@@ -24,36 +24,22 @@
         v-for="company in filteredAndPaginatedCompanies.data"
         :key="company['task']"
       >
-        <div class="row">
-          <div class="col-md-1 text-end"><input type="checkbox" /></div>
-          <div class="col-md-10 text-center">
-            <h6>{{ company["task"] }}</h6>
-          </div>
-          *
-          <div class="col-md-1"></div>
-        </div>
-        <!-- <div class="card mb-3">
-        <div class="d-flex align-items-center">
-          <div class="ps-3">
-            <h6>{{ company["task"] }}</h6>
-            <span class="text-muted small pt-2 ps-1">{{ company.About }}</span>
-          </div>
-        </div>
-        <div class="card-footer">
+        <div class="card-body">
           <div class="row">
-            <div class="col-6">Vue: {{ company.vue }}</div>
-            <div class="col-6">
-              <button
-                type="button"
-                class="btn btn-primary"
-                @click="handleSubmit(company['id'])"
+            <div class="col-md-1 text-center"><input type="checkbox" /></div>
+            <div class="col-md-10">
+              <h5 class="card-title">{{ company["task"] }}</h5>
+              <span><input type="radio" /></span>
+              <span class="text-muted small pt-1 fw-bold"
+                ><b> Devis - </b></span
               >
-                Voir
-              </button>
+              <span class="text-info small pt-2 ps-1">Aujourd'hui</span>
+            </div>
+            <div class="col-md-1 text-center">
+              <i class="bi bi-diamond-fill"></i>
             </div>
           </div>
         </div>
-      </div> -->
       </div>
     </div>
     <nav aria-label="...">
@@ -88,15 +74,14 @@
 </template>
 
 <script setup lang="ts">
-import type { ICompany } from "@/interfaces/company.interface";
 import axios from "axios";
 import { ref, onMounted, computed } from "vue";
 import router from "@/router";
 
 const companies = ref<any[]>([]);
-const searchTerm = ref(""); // Search term for filtering
-const currentPage = ref(1); // Current page number (initially set to 1)
-const itemsPerPage = 10; // Items to display per page
+const searchTerm = ref("");
+const currentPage = ref(1);
+const itemsPerPage = 8;
 
 onMounted(async () => {
   try {
