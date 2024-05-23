@@ -221,7 +221,7 @@
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Vertically Centered</h5>
+              <h5 class="modal-title">creer une taches</h5>
               <button
                 type="button"
                 class="btn-close"
@@ -231,11 +231,32 @@
               ></button>
             </div>
             <div class="modal-body">
-              Non omnis incidunt qui sed occaecati magni asperiores est
-              mollitia. Soluta at et reprehenderit. Placeat autem numquam et
-              fuga numquam. Tempora in facere consequatur sit dolor ipsum.
-              Consequatur nemo amet incidunt est facilis. Dolorem neque
-              recusandae quo sit molestias sint dignissimos.
+              <form>
+                <div class="row mb-3">
+                  <label for="inputText" class="col-sm-2 col-form-label"
+                    >Date</label
+                  >
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="inputEmail" class="col-sm-2 col-form-label"
+                    >Nom</label
+                  >
+                  <div class="col-sm-10">
+                    <input type="name" class="form-control" />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="inputPassword" class="col-sm-2 col-form-label"
+                    >Tag</label
+                  >
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" />
+                  </div>
+                </div>
+              </form>
             </div>
             <div class="modal-footer">
               <button
@@ -253,7 +274,6 @@
           </div>
         </div>
       </div>
-      <!-- End Vertically centered Modal-->
     </div>
   </div>
 </template>
